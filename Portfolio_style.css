@@ -329,8 +329,6 @@ section,
   color: var(--text) !important;
 }
 
-// ...existing code...
-
 /* Responsive adjustments */
 @media (max-width:1400px){
   :root{ --container-max:1100px; }
@@ -380,4 +378,3 @@ section,
 
 /* Ensure images scale cleanly */
 img{ max-width:100%; height:auto; display:block; }
-
