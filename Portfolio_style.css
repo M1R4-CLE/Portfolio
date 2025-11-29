@@ -159,7 +159,41 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;back
   cursor:pointer;
 }
 .carousel { position: relative; }
-.carousel-viewport { overflow: hidden; width: 100%; }
+/* Hide horizontal scrollbar by default; reveal when hovering the carousel */
+.carousel-viewport {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;        /* Firefox: hide */
+  -ms-overflow-style: none;     /* IE/Edge fallback: hide */
+}
+
+/* WebKit: set scrollbar height to 0 so it's invisible */
+.carousel-viewport::-webkit-scrollbar {
+  height: 0;
+  transition: height 180ms ease;
+}
+.carousel-viewport::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.12);
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,0.16);
+}
+
+/* show a thin translucent scrollbar when user hovers the carousel area or focuses it */
+.carousel-wrap:hover .carousel-viewport,
+.carousel-viewport:hover,
+.carousel-viewport:focus {
+  scrollbar-width: thin; /* Firefox: show thin */
+}
+.carousel-wrap:hover .carousel-viewport::-webkit-scrollbar,
+.carousel-viewport:hover::-webkit-scrollbar,
+.carousel-viewport:focus::-webkit-scrollbar {
+  height: 8px; /* WebKit: reveal */
+}
+.carousel-wrap:hover .carousel-viewport::-webkit-scrollbar-thumb,
+.carousel-viewport:hover::-webkit-scrollbar-thumb,
+.carousel-viewport:focus::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.14);
+}
 .carousel-track {
   display: flex;
   gap: 18px;
@@ -186,7 +220,7 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;back
 .project-card img {
   display:block;
   width:100%;
-  height:160px;
+  height:220px; /* increased from 160px to make the certificate taller */
   object-fit:cover;
   border-radius:6px;
 }
@@ -195,15 +229,17 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;back
   .certificate-card, .project-card {
     flex: 0 0 calc((100% - 18px) / 2);
     max-width: calc((100% - 18px) / 2);
+    height: 1500px; /* added: outer box height at ≤980px */
   }
-  .certificate-card img, .project-card img { height:140px; }
+  .certificate-card img, .project-card img { height:180px; } /* increased from 140px */
 }
 @media (max-width:600px){
   .certificate-card, .project-card {
     flex: 0 0 100%;
     max-width: 100%;
+    height: 210px; /* added: outer box height at ≤600px */
   }
-  .certificate-card img, .project-card img { height:200px; }
+  .certificate-card img, .project-card img { height:200px; } /* keep mobile size */
 }
 
 .carousel-btn{
@@ -239,12 +275,68 @@ section,
 }
 
 /* Lightbox styles */
-.lightbox{ display:none; position:fixed; inset:0; z-index:1200; align-items:center; justify-content:center; }
+.lightbox{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:1200;
+  align-items:center;
+  justify-content:center;
+  background: rgba(6,8,10,0.42); /* subtle tinted window */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
 .lightbox.open{ display:flex; }
-.lightbox-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,0.7); }
-.lightbox-content{ position:relative; z-index:2; max-width:90vw; max-height:90vh; padding:18px; box-sizing:border-box; display:flex; align-items:center; justify-content:center; }
-.lightbox-content img{ max-width:100%; max-height:80vh; object-fit:contain; border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.7); background:#111; }
-.lightbox-close{ position:absolute; top:8px; right:8px; z-index:3; background:rgba(0,0,0,0.6); color:var(--accent); border:0; width:40px; height:40px; border-radius:8px; font-size:18px; cursor:pointer; }
+/* lightbox layout: slightly larger and a bit more breathing room */
+.lightbox-content{
+  position:relative;
+  z-index:2;
+  max-width:1300px;      /* increased slightly to make it a bit bigger */
+  width:92vw;
+  max-height:92vh;
+  padding:20px;
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns: 1fr 480px; /* wider meta column for the description/button */
+  gap:26px;
+  align-items:stretch;
+  background: transparent; /* keep content panel transparent so backdrop shows through */
+}
+.lightbox-content img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:10px; /* a touch larger radius */
+  box-shadow:0 30px 80px rgba(0,0,0,0.65);
+  background:#111;
+}
+
+/* meta panel on the right: tinted "window" effect */
+.lightbox-meta{
+  background: linear-gradient(rgba(18,18,18,0.56), rgba(18,18,18,0.46)); /* tinted, see-through */
+  padding:24px;
+  border-radius:14px;
+  position:relative;
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  justify-content:flex-start;
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+}
+.lightbox-meta h2{ margin:0; font-size:2.2rem; color:var(--accent); }
+.lightbox-meta p{ margin:0; color:var(--muted); line-height:1.5; }
+.lightbox-meta .btn{ align-self:flex-start; }
+
+/* close button inside meta */
+.lightbox-close{ position:absolute; top:12px; right:12px; z-index:3; background:transparent; color:var(--accent); border:0; width:40px; height:40px; border-radius:6px; font-size:18px; cursor:pointer; }
+
+@media (max-width:900px){
+  .lightbox-content{ grid-template-columns: 1fr; max-width:94vw; }
+  .lightbox-meta{ order:2; max-height:40vh; overflow:auto; }
+  .lightbox-content img{ order:1; max-height:45vh; }
+}
 
 .certificate-card{ cursor:pointer; }
 
@@ -343,38 +435,112 @@ section,
   .hero{ grid-template-columns: 1fr; gap:18px; }
   .card-left{ order:0; width:100%; }
   .card-center{ order:1; }
-  #profile-img{ width:240px; height:240px; margin:0 auto; display:block; }
-  .hero-title{ font-size:1.6rem; }
-  .hero-blurb{ font-size:0.95rem; }
-  .profile-info{ padding:14px; }
-  .carousel-wrap{ gap:14px; }
-  .carousel-viewport{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
-  .certificate-card, .project-card { flex:0 0 calc((100% - 18px) / 2); max-width: calc((100% - 18px) / 2); }
-  .certificate-card img, .project-card img { height:140px; }
-  .top-nav{ right:12px; top:12px; }
-  .top-nav a{ padding:6px 8px; font-size:0.9rem; }
 }
 
-@media (max-width:600px){
-  :root{ --container-max:100%; }
-  .container{ width:calc(100% - 32px); padding:16px; margin:18px auto; }
-  .hero{ grid-template-columns: 1fr; gap:14px; }
-  #profile-img{ width:200px; height:200px; }
-  .hero-title{ font-size:1.25rem; }
-  .hero-blurb{ font-size:0.95rem; padding:14px; }
-  .btn{ padding:10px 12px; font-size:0.92rem; width:auto; }
-  .certificate-card, .project-card { flex:0 0 100%; max-width:100%; }
-  .certificate-card img, .project-card img { height:200px; }
-  .carousel-track{ gap:12px; }
-  .carousel-viewport{ overflow-x:auto; scroll-snap-type:x mandatory; }
-  .carousel-track > *{ scroll-snap-align:start; }
-  .top-nav a{ display:none; } /* keeps nav compact on small screens */
-  .theme-toggle{ display:inline-flex; }
-  section, .about-card, .section-block { scroll-margin-top:120px; }
+/* --- 3D carousel (scoped to Certificates section) --- */
+/* push certificates lower */
+#achievements {
+  margin-top: 110px; /* increased top space so heading is lower on the page */
+  position: relative;
 }
 
-/* Small polish: make carousel viewport scrollable by default */
-.carousel-viewport{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+/* container perspective only for this section */
+#achievements .drag-root {
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
 
-/* Ensure images scale cleanly */
-img{ max-width:100%; height:auto; display:block; }
+/* 3D carousel scoped elements */
+#achievements #drag-container,
+#achievements #spin-container {
+  position: relative;
+  display: flex;
+  margin: 18px auto;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  /* keep flat (no X tilt) */
+  -webkit-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+  width: 100%;
+  max-width: 900px;
+  height: 220px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ensure spin container preserves 3D and card backs are visible */
+#achievements #spin-container {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+/* show the card when it's on the far side (so you can see all items) */
+#achievements #spin-container img,
+#achievements #spin-container video {
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+
+/* 3D carousel animation keyframes (rotate around Y while keeping tilt) */
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotateY(0deg); transform: rotateY(0deg); }
+  to   { -webkit-transform: rotateY(360deg); transform: rotateY(360deg); }
+}
+@keyframes spin {
+  from { -webkit-transform: rotateY(0deg); transform: rotateY(0deg); }
+  to   { -webkit-transform: rotateY(360deg); transform: rotateY(360deg); }
+}
+@-webkit-keyframes spinRevert {
+  from { -webkit-transform: rotateY(360deg); transform: rotateY(360deg); }
+  to   { -webkit-transform: rotateY(0deg); transform: rotateY(0deg); }
+}
+@keyframes spinRevert {
+  from { -webkit-transform: rotateY(360deg); transform: rotateY(360deg); }
+  to   { -webkit-transform: rotateY(0deg); transform: rotateY(0deg); }
+}
+
+/* make container height adapt to image height + padding (allow dynamic resizing) */
+#achievements #drag-container,
+#achievements #spin-container {
+  height: auto;
+  min-height: 260px; /* fallback tall enough for visual */
+  padding-top: 36px;   /* increased top padding so carousel items sit lower */
+  padding-bottom: 40px;
+}
+
+/* add specific spacing for the section title inside achievements */
+#achievements h2 {
+  margin-top: 8px;    /* small offset from top of section */
+  margin-bottom: 26px; /* larger gap between the "Certificate" word and the carousel */
+  padding-left: 18px; /* align heading visually with carousel center */
+  font-size: 1.25rem;
+}
+
+/* small responsive tweaks (allow carousel to expand circle on narrow viewports) */
+@media (max-width: 720px) {
+  #achievements #drag-container { min-height: 220px; padding-bottom: 28px; }
+  #achievements #ground { width: 520px; height: 520px; }
+}
+
+/* Add larger vertical spacing before Projects section so page scrolls longer */
+#projects {
+  margin-top: 220px; /* increase or reduce this value to taste */
+  padding-top: 12px;
+}
+
+#projects .carousel-wrap {
+  margin-top: 28px; /* extra space between title and carousel */
+}
+
+#achievements #drag-container {
+  /* remove tilt: ensure no rotateX here */
+  transform: none;
+  /* or: transform: rotateX(0deg); */
+  touch-action: none;          /* allow both horizontal and vertical pointer moves */
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform;
+}
