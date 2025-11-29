@@ -172,3 +172,41 @@ document.querySelectorAll('.carousel-wrap').forEach((w,i)=>{
     }, { passive: true });
   });
 })();
+
+var sX, nX, desX = 0, tX = 0; // NO tY
+
+function applyTransformYOnly() {
+  // keep container flat — only rotate Y
+  var odrag = document.getElementById("drag-container");
+  if (odrag) odrag.style.transform = "rotateY(" + tX + "deg)";
+}
+
+// Pointer drag: update only horizontal rotation
+document.onpointerdown = function(e) {
+  clearInterval(window._odrag_timer);
+  e = e || window.event;
+  sX = e.clientX;
+
+  this.onpointermove = function(ev) {
+    ev = ev || window.event;
+    nX = ev.clientX;
+    desX = nX - sX;
+    tX += desX * 0.12; // sensitivity
+    applyTransformYOnly();
+    sX = nX;
+  };
+
+  this.onpointerup = function() {
+    window._odrag_timer = setInterval(function() {
+      desX *= 0.94;
+      tX += desX * 0.12;
+      applyTransformYOnly();
+      if (Math.abs(desX) < 0.5) {
+        clearInterval(window._odrag_timer);
+      }
+    }, 17);
+    this.onpointermove = this.onpointerup = null;
+  };
+
+  return false;
+};
