@@ -81,35 +81,203 @@
          </section>
 
          <section id="achievements" class="section-block">
-            <h2>Certificate</h2>
+           <h2>Certificate</h2>
 
-            <div class="carousel-wrap">
-               <button class="carousel-btn prev-btn" aria-label="Previous certificates">‹</button>
+           <style>
+             /* Parent perspective (keeps 3D but no tilt) */
+             #achievements {
+               perspective: 1400px;
+               -webkit-perspective: 1400px;
+               padding-top: 10px; /* remove extra top padding */
+               margin-top: px; /* pull section slightly closer to About */
+             }
 
-               <div class="carousel">
-                  <div class="carousel-viewport">
-                     <div class="carousel-track">
-                        <div class="certificate-card"><img class="cert-img" src="Screenshot 2025-11-28 171926.png" alt="Certificate 1"></div>
-                        <div class="certificate-card"><img class="cert-img" src="Screenshot 2025-11-28 171949.png" alt="Certificate 2"></div>
-                        <div class="certificate-card"><img class="cert-img" src="Screenshot 2025-11-28 171900.png" alt="Certificate 3"></div>
-                        <div class="certificate-card"><img class="cert-img" src="Screenshot 2025-11-28 172008.png" alt="Certificate 4"></div>
-                        <div class="certificate-card"><img class="cert-img" src="Screenshot 2025-11-28 172042.png" alt="Certificate 5"></div>
-                        <div class="certificate-card"><img class="cert-img" src="Screenshot 2025-11-28 172108.png" alt="Certificate 6"></div>
-                     </div>
-                  </div>
-               </div>
+             /* Allow JS to control transforms — DO NOT use !important to block inline styles */
+             #achievements #drag-container,
+             #achievements #spin-container {
+               position: relative;
+               margin: auto;
+               transform-style: preserve-3d;
+               -webkit-transform-style: preserve-3d;
+               /* no forced transform here (removed 'transform: none !important') */
+             }
 
-               <button class="carousel-btn next-btn" aria-label="Next certificates">›</button>
-            </div>
+             /* Landscape card size */
+             #achievements #spin-container {
+               width: 320px;
+               height: 210px;
+               transform-origin: center center;
+             }
 
-            <!-- Lightbox -->
-            <div id="cert-lightbox" class="lightbox" aria-hidden="true">
-               <div class="lightbox-backdrop"></div>
-               <div class="lightbox-content" role="dialog" aria-modal="true">
+             /* Card appearance with glass reflection */
+             #achievements #spin-container img {
+               position: absolute;
+               left: 0;
+               top: 0;
+               width: 100%;
+               height: 100%;
+               object-fit: cover;
+               background: #fff;
+               border-radius: 6px;
+               box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+               /* allow seeing cards when the container tilts (back side visible) */
+               backface-visibility: visible;
+               -webkit-backface-visibility: visible;
+               -webkit-transform-style: preserve-3d;
+               transform-style: preserve-3d;
+               -webkit-box-reflect: below 8px linear-gradient(transparent, rgba(255,255,255,0.03), rgba(0,0,0,0.45));
+             }
+
+             /* Ground */
+             #achievements #ground {
+               position: absolute;
+               left: 50%;
+               top: 100%;
+               transform: translate(-50%, -50%) rotateX(90deg);
+               width: 900px;
+               height: 900px;
+               background: radial-gradient(circle farthest-side, rgba(0,0,0,0.40), transparent);
+               pointer-events: none;
+             }
+           </style>
+
+           <div id="drag-container" aria-label="Certificates carousel">
+             <div id="spin-container">
+               <img src="Screenshot 2025-11-28 171926.png" alt="Certificate 1" />
+               <img src="Screenshot 2025-11-28 171949.png" alt="Certificate 2" />
+               <img src="Screenshot 2025-11-28 171900.png" alt="Certificate 3" />
+               <img src="Screenshot 2025-11-28 172008.png" alt="Certificate 4" />
+               <img src="Screenshot 2025-11-28 172042.png" alt="Certificate 5" />
+               <img src="Screenshot 2025-11-28 172108.png" alt="Certificate 6" />
+               <p style="display:none">Certificates</p>
+             </div>
+             <div id="ground"></div>
+           </div>
+
+           <script>
+             (function () {
+               var radius = 260;
+               var autoRotate = true;
+               var rotateSpeed = -60;
+               var imgWidth = 320;
+               var imgHeight = 210;
+               var spacingPadding = 16;
+
+               var odrag = document.getElementById("drag-container");
+               var ospin = document.getElementById("spin-container");
+               var aImg = ospin.getElementsByTagName("img");
+               var aVid = ospin.getElementsByTagName("video");
+               var aEle = [].slice.call(aImg).concat([].slice.call(aVid));
+
+               // sync container size with CSS
+               ospin.style.width = imgWidth + "px";
+               ospin.style.height = imgHeight + "px";
+
+               var ground = document.getElementById("ground");
+
+               function computeMinRadius() {
+                 var N = Math.max(1, aEle.length);
+                 var denom = 2 * Math.sin(Math.PI / N) || 1;
+                 var minR = (imgWidth + spacingPadding) / denom;
+                 if (!isFinite(minR) || minR < 0) minR = imgWidth;
+                 return Math.ceil(minR);
+               }
+
+               function ensureRadius(r) {
+                 return Math.max(r, computeMinRadius());
+               }
+
+               radius = ensureRadius(radius);
+               if (ground) {
+                 ground.style.width = (radius * 2.6) + "px";
+                 ground.style.height = (radius * 2.6) + "px";
+               }
+
+               function init(delayTime) {
+                 radius = ensureRadius(radius);
+                 for (var i = 0; i < aEle.length; i++) {
+                   var angle = i * (360 / aEle.length);
+                   aEle[i].style.transform = "rotateY(" + angle + "deg) translateZ(" + radius + "px)";
+                   aEle[i].style.transition = "transform 1s";
+                   aEle[i].style.transitionDelay = (delayTime || (aEle.length - i) / 4) + "s";
+                 }
+                 if (ground) {
+                   ground.style.width = (radius * 2.6) + "px";
+                   ground.style.height = (radius * 2.6) + "px";
+                 }
+               }
+
+               // --- NO vertical tilt: only rotate Y on the container ---
+               var tX = 0;
+               var sX = 0, nX = 0, desX = 0;
+
+               function applyTransformY() {
+                 // ensure container stays flat (no rotateX)
+                 odrag.style.transform = "rotateY(" + tX + "deg)";
+               }
+
+               function playSpin(yes) {
+                 ospin.style.animationPlayState = yes ? "running" : "paused";
+               }
+
+               if (autoRotate) {
+                 var animationName = rotateSpeed > 0 ? "spin" : "spinRevert";
+                 ospin.style.animation = animationName + " " + Math.abs(rotateSpeed) + "s infinite linear";
+               }
+
+               // Pointer: only horizontal movement updates rotation
+               document.onpointerdown = function (e) {
+                 clearInterval(odrag.timer);
+                 e = e || window.event;
+                 sX = e.clientX;
+
+                 this.onpointermove = function (ev) {
+                   ev = ev || window.event;
+                   nX = ev.clientX;
+                   desX = nX - sX;
+                   tX += desX * 0.12; // horizontal sensitivity
+                   applyTransformY();
+                   sX = nX;
+                 };
+
+                 this.onpointerup = function () {
+                   odrag.timer = setInterval(function () {
+                     desX *= 0.94;
+                     tX += desX * 0.12;
+                     applyTransformY();
+                     playSpin(false);
+                     if (Math.abs(desX) < 0.5) {
+                       clearInterval(odrag.timer);
+                       playSpin(true);
+                     }
+                   }, 17);
+                   this.onpointermove = this.onpointerup = null;
+                 };
+
+                 return false;
+               };
+
+               // wheel zoom (keeps minimum spacing)
+               document.onmousewheel = function (e) {
+                 e = e || window.event;
+                 var d = e.wheelDelta / 20 || -e.detail;
+                 radius = ensureRadius(Math.max(60, radius + d));
+                 init(1);
+               };
+
+               setTimeout(function () { init(0); applyTransformY(); }, 120);
+               window.addEventListener("resize", function () { radius = ensureRadius(radius); init(0); });
+             })();
+           </script>
+
+           <!-- lightbox (unchanged) -->
+           <div id="cert-lightbox" class="lightbox" aria-hidden="true">
+             <div class="lightbox-backdrop"></div>
+             <div class="lightbox-content" role="dialog" aria-modal="true">
                <button class="lightbox-close" aria-label="Close certificate">✕</button>
                <img id="lightbox-img" src="" alt="Expanded certificate">
-               </div>
-            </div>
+             </div>
+           </div>
          </section>
 
          <section id="projects" class="section-block">
