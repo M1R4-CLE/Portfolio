@@ -20,54 +20,193 @@ console.log('portfolio_task4_script.js loaded (patched)');
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOMContentLoaded — init carousels');
   const wraps = Array.from(document.querySelectorAll('.carousel-wrap'));
-  console.log('found carousel-wrap count =', wraps.length);
-  wraps.forEach((w, i) => {
+  wraps.forEach((wrap, index) => {
     try {
-      initCarousel(w);
-      console.log('initCarousel OK for index', i);
+      initCarousel(wrap);
+      console.log('initCarousel OK for index', index);
     } catch (err) {
-      console.error('initCarousel error for index', i, err);
+      console.error('initCarousel error for index', index, err);
     }
   });
-  
-  const lightbox = document.getElementById('cert-lightbox');
-  const lbImg = document.getElementById('lightbox-img');
-  if (lightbox && lbImg) {
-    const closeBtn = lightbox.querySelector('.lightbox-close');
-    const backdrop = lightbox.querySelector('.lightbox-backdrop');
-    function openLightbox(src, alt) {
-      lbImg.src = src; lbImg.alt = alt || 'Image';
-      lightbox.classList.add('open'); lightbox.setAttribute('aria-hidden','false');
-      document.documentElement.style.overflow = 'hidden'; document.body.style.overflow = 'hidden';
-      if (closeBtn) closeBtn.focus();
-    }
-    function closeLightbox() {
-      lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); lbImg.src = '';
-      document.documentElement.style.overflow = ''; document.body.style.overflow = '';
-    }
 
-    
-    document.addEventListener('click', (e) => {
-      const t = e.target;
-      if (!t || t.tagName !== 'IMG') return;
-      
-      if (t.classList.contains('cert-img') || t.classList.contains('expand-img') ||
-          t.closest('.certificate-card') || t.closest('.project-card')) {
-        openLightbox(t.src, t.alt || t.getAttribute('alt') || 'Image');
+  const setScrollLock = (locked) => {
+    document.documentElement.style.overflow = locked ? 'hidden' : '';
+    document.body.style.overflow = locked ? 'hidden' : '';
+  };
+
+  // Certificate lightbox
+  const certLightbox = document.getElementById('cert-lightbox');
+  const certImage = document.getElementById('lightbox-img');
+  if (certLightbox && certImage) {
+    const certClose = certLightbox.querySelector('.lightbox-close');
+    const certBackdrop = certLightbox.querySelector('.lightbox-backdrop');
+    let certActiveTrigger = null;
+
+    const openCertLightbox = (src, alt, trigger) => {
+      certImage.src = src;
+      certImage.alt = alt || 'Certificate';
+      certLightbox.classList.add('open');
+      certLightbox.setAttribute('aria-hidden', 'false');
+      certActiveTrigger = trigger || null;
+      setScrollLock(true);
+      if (certClose) certClose.focus();
+    };
+
+    const closeCertLightbox = () => {
+      certLightbox.classList.remove('open');
+      certLightbox.setAttribute('aria-hidden', 'true');
+      certImage.src = '';
+      certImage.alt = '';
+      setScrollLock(false);
+      if (certActiveTrigger) {
+        certActiveTrigger.focus();
+        certActiveTrigger = null;
+      }
+    };
+
+    document
+      .querySelectorAll('#achievements .certificate-card img')
+      .forEach((img) => {
+        img.setAttribute('tabindex', '0');
+        img.addEventListener('click', () =>
+          openCertLightbox(img.src, img.alt, img)
+        );
+        img.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openCertLightbox(img.src, img.alt, img);
+          }
+        });
+      });
+
+    if (certBackdrop) certBackdrop.addEventListener('click', closeCertLightbox);
+    if (certClose) certClose.addEventListener('click', closeCertLightbox);
+    certLightbox.addEventListener('click', (e) => {
+      if (e.target === certLightbox) closeCertLightbox();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && certLightbox.classList.contains('open')) {
+        closeCertLightbox();
       }
     });
+  } else {
+    console.warn('Certificate lightbox elements missing', {
+      certLightbox: !!certLightbox,
+      certImage: !!certImage,
+    });
+  }
 
-    document.querySelectorAll('.carousel-track img').forEach(img => {
-      img.addEventListener('error', () => console.warn('Image failed to load:', img.src));
-      img.addEventListener('load', () => console.debug('Image loaded:', img.src, 'naturalSize', img.naturalWidth, img.naturalHeight));
+  // Project lightbox
+  const projectLightbox = document.getElementById('project-lightbox');
+  const projectImage = document.getElementById('project-lightbox-img');
+  const projectTitle = document.getElementById('project-lightbox-title');
+  const projectDescription = document.getElementById('project-lightbox-desc');
+  const projectTags = document.getElementById('project-lightbox-tags');
+  const projectLinkRow = document.getElementById('project-lightbox-link-row');
+  const projectLinkAnchor = document.getElementById('project-lightbox-link');
+
+  if (
+    projectLightbox &&
+    projectImage &&
+    projectTitle &&
+    projectDescription &&
+    projectTags
+  ) {
+    const projectClose = projectLightbox.querySelector(
+      '.project-lightbox__close'
+    );
+    const projectBackdrop = projectLightbox.querySelector(
+      '.project-lightbox__backdrop'
+    );
+    let projectActiveTrigger = null;
+
+    const closeProjectLightbox = () => {
+      projectLightbox.classList.remove('open');
+      projectLightbox.setAttribute('aria-hidden', 'true');
+      projectImage.src = '';
+      projectImage.alt = '';
+      projectTitle.textContent = '';
+      projectDescription.textContent = '';
+      projectTags.innerHTML = '';
+      if (projectLinkRow) projectLinkRow.hidden = true;
+      if (projectLinkAnchor) {
+        projectLinkAnchor.removeAttribute('href');
+        projectLinkAnchor.textContent = 'Open project';
+      }
+      setScrollLock(false);
+      if (projectActiveTrigger) {
+        projectActiveTrigger.focus();
+        projectActiveTrigger = null;
+      }
+    };
+
+    const openProjectLightbox = (card) => {
+      const mediaImg = card.querySelector('.project-media img');
+      const titleText =
+        card.querySelector('.project-title')?.textContent?.trim() || 'Project';
+      const descText =
+        card.querySelector('.project-desc')?.textContent?.trim() || '';
+
+      projectImage.src = mediaImg ? mediaImg.src : '';
+      projectImage.alt = mediaImg ? mediaImg.alt || titleText : 'Project';
+      projectTitle.textContent = titleText;
+      projectDescription.textContent = descText;
+
+      projectTags.innerHTML = '';
+      card.querySelectorAll('.project-tags li').forEach((tagEl) => {
+        const li = document.createElement('li');
+        li.textContent = tagEl.textContent.trim();
+        projectTags.appendChild(li);
+      });
+
+      const linkUrl = card.getAttribute('data-project-link');
+      const linkLabel = card.getAttribute('data-project-link-label') || 'Open project';
+      if (projectLinkRow && projectLinkAnchor && linkUrl) {
+        projectLinkAnchor.href = linkUrl;
+        projectLinkAnchor.textContent = linkLabel;
+        projectLinkRow.hidden = false;
+      } else if (projectLinkRow) {
+        projectLinkRow.hidden = true;
+      }
+
+      projectActiveTrigger = card;
+      projectLightbox.classList.add('open');
+      projectLightbox.setAttribute('aria-hidden', 'false');
+      setScrollLock(true);
+      if (projectClose) projectClose.focus();
+    };
+
+    document.querySelectorAll('.project-card').forEach((card) => {
+      card.setAttribute('tabindex', '0');
+      card.addEventListener('click', () => openProjectLightbox(card));
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openProjectLightbox(card);
+        }
+      });
     });
 
-    if (backdrop) backdrop.addEventListener('click', closeLightbox);
-    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+    if (projectBackdrop)
+      projectBackdrop.addEventListener('click', closeProjectLightbox);
+    if (projectClose)
+      projectClose.addEventListener('click', closeProjectLightbox);
+    projectLightbox.addEventListener('click', (e) => {
+      if (e.target === projectLightbox) closeProjectLightbox();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && projectLightbox.classList.contains('open')) {
+        closeProjectLightbox();
+      }
+    });
   } else {
-    console.warn('Lightbox elements missing', {lightbox: !!lightbox, lbImg: !!lbImg});
+    console.warn('Project lightbox elements missing', {
+      projectLightbox: !!projectLightbox,
+      projectImage: !!projectImage,
+      projectTitle: !!projectTitle,
+      projectDescription: !!projectDescription,
+      projectTags: !!projectTags,
+    });
   }
 });
 
@@ -210,3 +349,32 @@ document.onpointerdown = function(e) {
 
   return false;
 };
+
+function setScrollLock(locked) {
+  document.documentElement.style.overflow = locked ? 'hidden' : '';
+  document.body.style.overflow = locked ? 'hidden' : '';
+}
+
+// certificate lightbox setup
+certImages.forEach(img => {
+  img.addEventListener('click', () => openLightbox(img.src, img.alt || 'Certificate'));
+  img.setAttribute('tabindex', '0');
+  img.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(img.src, img.alt || 'Certificate'); } });
+});
+
+// project lightbox setup
+function openProjectLightbox(card) {
+  const mediaImg = card.querySelector('.project-media img');
+  projectImg.src = mediaImg.src;
+  projectTitle.textContent = titleText;
+  projectDesc.textContent = descText;
+  projectLightbox.classList.add('open');
+  projectLightbox.setAttribute('aria-hidden','false');
+  setScrollLock(true);
+  projectClose.focus();
+}
+document.querySelectorAll('.project-card').forEach(card => {
+  card.setAttribute('tabindex','0');
+  card.addEventListener('click', () => openProjectLightbox(card));
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProjectLightbox(card); } });
+});
