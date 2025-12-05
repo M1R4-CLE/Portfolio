@@ -159,15 +159,13 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;back
   cursor:pointer;
 }
 .carousel { position: relative; }
-/* Hide horizontal scrollbar by default; reveal when hovering the carousel */
 .carousel-viewport {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;        /* Firefox: hide */
-  -ms-overflow-style: none;     /* IE/Edge fallback: hide */
+  scrollbar-width: none;        
+  -ms-overflow-style: none;     
 }
 
-/* WebKit: set scrollbar height to 0 so it's invisible */
 .carousel-viewport::-webkit-scrollbar {
   height: 0;
   transition: height 180ms ease;
@@ -178,16 +176,15 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;back
   border: 2px solid rgba(0,0,0,0.16);
 }
 
-/* show a thin translucent scrollbar when user hovers the carousel area or focuses it */
 .carousel-wrap:hover .carousel-viewport,
 .carousel-viewport:hover,
 .carousel-viewport:focus {
-  scrollbar-width: thin; /* Firefox: show thin */
+  scrollbar-width: thin; 
 }
 .carousel-wrap:hover .carousel-viewport::-webkit-scrollbar,
 .carousel-viewport:hover::-webkit-scrollbar,
 .carousel-viewport:focus::-webkit-scrollbar {
-  height: 8px; /* WebKit: reveal */
+  height: 8px; 
 }
 .carousel-wrap:hover .carousel-viewport::-webkit-scrollbar-thumb,
 .carousel-viewport:hover::-webkit-scrollbar-thumb,
@@ -210,36 +207,95 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;back
   border-radius: 10px;
   padding: 12px;
   background: rgba(0,0,0,0.45);
+}
+
+.certificate-card {
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow: hidden;
+  overflow:hidden;
 }
 
-.certificate-card img,
-.project-card img {
+.certificate-card img {
   display:block;
   width:100%;
-  height:220px; /* increased from 160px to make the certificate taller */
+  height:220px;
   object-fit:cover;
   border-radius:6px;
 }
 
+.project-card {
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  background:rgba(0,0,0,0.55);
+  padding:16px 18px;
+  align-items:stretch;
+}
+
+.project-media {
+  position:relative;
+  width:100%;
+  max-width:280px;
+  margin:0 auto;
+  aspect-ratio:16 / 9;
+  border-radius:10px;
+  overflow:hidden;
+  background:linear-gradient(180deg, rgba(12,12,12,0.9), rgba(5,5,5,0.9));
+  box-shadow:0 12px 24px rgba(0,0,0,0.45);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px;
+}
+
+.project-media img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:6px;
+}
+
+.project-info {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:flex-start;
+  text-align:left;
+}
+
+.project-desc {
+  margin:0;
+  font-size:0.9rem;
+  line-height:1.45;
+  color:var(--muted);
+}
+
+.project-tags {
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:flex-start;
+}
+
 @media (max-width:980px){
-  .certificate-card, .project-card {
-    flex: 0 0 calc((100% - 18px) / 2);
-    max-width: calc((100% - 18px) / 2);
-    height: 1500px; /* added: outer box height at ≤980px */
+  .certificate-card,
+  .project-card {
+    flex:0 0 calc((100% - 18px) / 2);
+    max-width:calc((100% - 18px) / 2);
   }
-  .certificate-card img, .project-card img { height:180px; } /* increased from 140px */
+  .certificate-card img { height:180px; }
 }
 @media (max-width:600px){
-  .certificate-card, .project-card {
-    flex: 0 0 100%;
-    max-width: 100%;
-    height: 210px; /* added: outer box height at ≤600px */
+  .certificate-card,
+  .project-card {
+    flex:0 0 100%;
+    max-width:100%;
   }
-  .certificate-card img, .project-card img { height:200px; } /* keep mobile size */
+  .certificate-card img { height:200px; }
 }
 
 .carousel-btn{
@@ -282,7 +338,7 @@ section,
   z-index:1200;
   align-items:center;
   justify-content:center;
-  background: rgba(6,8,10,0.42); /* subtle tinted window */
+  background: rgba(6,8,10,0.42); 
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
@@ -291,29 +347,29 @@ section,
 .lightbox-content{
   position:relative;
   z-index:2;
-  max-width:1300px;      /* increased slightly to make it a bit bigger */
+  max-width:1300px;      
   width:92vw;
   max-height:92vh;
   padding:20px;
   box-sizing:border-box;
   display:grid;
-  grid-template-columns: 1fr 480px; /* wider meta column for the description/button */
+  grid-template-columns: 1fr 480px; 
   gap:26px;
   align-items:stretch;
-  background: transparent; /* keep content panel transparent so backdrop shows through */
+  background: transparent; 
 }
 .lightbox-content img{
   width:100%;
   height:100%;
   object-fit:contain;
-  border-radius:10px; /* a touch larger radius */
+  border-radius:10px; 
   box-shadow:0 30px 80px rgba(0,0,0,0.65);
   background:#111;
 }
 
 /* meta panel on the right: tinted "window" effect */
 .lightbox-meta{
-  background: linear-gradient(rgba(18,18,18,0.56), rgba(18,18,18,0.46)); /* tinted, see-through */
+  background: linear-gradient(rgba(18,18,18,0.56), rgba(18,18,18,0.46)); 
   padding:24px;
   border-radius:14px;
   position:relative;
@@ -438,9 +494,8 @@ section,
 }
 
 /* --- 3D carousel (scoped to Certificates section) --- */
-/* push certificates lower */
 #achievements {
-  margin-top: 110px; /* increased top space so heading is lower on the page */
+  margin-top: 110px; 
   position: relative;
 }
 
@@ -501,46 +556,196 @@ section,
   to   { -webkit-transform: rotateY(0deg); transform: rotateY(0deg); }
 }
 
-/* make container height adapt to image height + padding (allow dynamic resizing) */
 #achievements #drag-container,
 #achievements #spin-container {
   height: auto;
-  min-height: 260px; /* fallback tall enough for visual */
-  padding-top: 36px;   /* increased top padding so carousel items sit lower */
+  min-height: 260px; 
+  padding-top: 36px;   
   padding-bottom: 40px;
 }
 
-/* add specific spacing for the section title inside achievements */
 #achievements h2 {
-  margin-top: 8px;    /* small offset from top of section */
-  margin-bottom: 26px; /* larger gap between the "Certificate" word and the carousel */
-  padding-left: 18px; /* align heading visually with carousel center */
+  margin-top: 8px;    
+  margin-bottom: 26px; 
+  padding-left: 18px; 
   font-size: 1.25rem;
 }
 
-/* small responsive tweaks (allow carousel to expand circle on narrow viewports) */
 @media (max-width: 720px) {
   #achievements #drag-container { min-height: 220px; padding-bottom: 28px; }
   #achievements #ground { width: 520px; height: 520px; }
 }
 
-/* Add larger vertical spacing before Projects section so page scrolls longer */
 #projects {
-  margin-top: 220px; /* increase or reduce this value to taste */
+  margin-top: 220px; 
   padding-top: 12px;
 }
 
 #projects .carousel-wrap {
-  margin-top: 28px; /* extra space between title and carousel */
+  margin-top: 28px; 
 }
 
 #achievements #drag-container {
-  /* remove tilt: ensure no rotateX here */
   transform: none;
-  /* or: transform: rotateX(0deg); */
-  touch-action: none;          /* allow both horizontal and vertical pointer moves */
+  touch-action: none;          
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
   will-change: transform;
 }
+
+.project-lightbox {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:1400;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.project-lightbox.open { display:flex; }
+
+.project-lightbox__backdrop {
+  position:absolute;
+  inset:0;
+  background:rgba(4,6,8,0.78);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+.project-lightbox__content {
+  position:relative;
+  z-index:1;
+  width:min(1200px,96vw);
+  max-height:92vh;
+  padding:32px;
+  display:grid;
+  grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+  gap:32px;
+  background:linear-gradient(135deg, rgba(18,18,20,0.94), rgba(10,10,12,0.92));
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:20px;
+  box-shadow:0 40px 120px rgba(0,0,0,0.72);
+  overflow:hidden;
+}
+
+.project-lightbox__media {
+  position:relative;
+  padding:18px;
+  border-radius:16px;
+  background:rgba(6,8,12,0.92);
+  box-shadow:0 24px 60px rgba(0,0,0,0.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.project-lightbox__media img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:12px;
+}
+
+.project-lightbox__details {
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  color:var(--text);
+}
+.project-lightbox__details h2 {
+  margin:0;
+  font-size:2rem;
+  font-weight:800;
+  color:var(--accent);
+}
+.project-lightbox__details p {
+  margin:0;
+  font-size:0.95rem;
+  line-height:1.6;
+  color:var(--muted);
+}
+
+.project-lightbox__tags {
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.project-lightbox__tags li {
+  padding:6px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.08);
+  font-weight:600;
+  font-size:0.85rem;
+  letter-spacing:0.02em;
+  color:var(--text);
+}
+
+.project-lightbox__close {
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.15);
+  background:rgba(7,10,12,0.8);
+  color:var(--accent);
+  font-size:18px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background 160ms ease, transform 160ms ease;
+}
+.project-lightbox__close:hover,
+.project-lightbox__close:focus-visible {
+  background:rgba(0,0,0,0.9);
+  transform:translateY(-1px);
+}
+
+.project-lightbox__link-row { display:flex; gap:12px; align-items:center; margin-top:6px; }
+.project-lightbox__link-label { font-size:0.85rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--muted); }
+.project-lightbox__link-anchor { padding:8px 16px; border-radius:999px; background:rgba(0,0,0,0.55); color:var(--accent); font-weight:600; text-decoration:none; transition:background 160ms ease, transform 160ms ease; }
+.project-lightbox__link-anchor:hover,
+.project-lightbox__link-anchor:focus-visible { background:rgba(0,0,0,0.75); transform:translateY(-1px); }
+
+@media (max-width:1024px) {
+  .project-lightbox__content {
+    grid-template-columns:1fr;
+    max-height:94vh;
+    padding:28px;
+  }
+  .project-lightbox__media {
+    max-height:48vh;
+  }
+}
+
+@media (max-width:640px) {
+  .project-lightbox {
+    padding:12px;
+  }
+  .project-lightbox__content {
+    padding:22px;
+    gap:20px;
+    border-radius:16px;
+  }
+  .project-lightbox__close {
+    top:12px;
+    right:12px;
+  }
+  .project-lightbox__details h2 {
+    font-size:1.6rem;
+  }
+}
+
+.project-card:focus,
+.project-card:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+
