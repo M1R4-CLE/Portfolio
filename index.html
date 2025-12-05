@@ -1,308 +1,445 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Student Portfolio</title>
-      <link rel="stylesheet" href="Portfolio_style.css" />
-   </head>
-   <body>
-      <header class="site-header">
-         <nav class="top-nav">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Portfolio</title>
+    <link rel="stylesheet" href="Portfolio_style.css" />
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="top-nav">
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
             <a href="#achievements">Certificates</a>
             <a href="#contact">Contact</a>
             <button id="theme-toggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">Theme</button>
-         </nav>
-      </header>
+        </nav>
+    </header>
 
-      <main class="container">
-         <section class="hero">
+    <main class="container">
+        <section class="hero">
             <div class="card card-left">
-               <div class="profile-area">
-                  <img id="profile-img" src="MASAPA draft pfp copy.png" alt="Profile Picture">
-               </div>
+                <div class="profile-area">
+                    <img id="profile-img" src="MASAPA draft pfp copy.png" alt="Profile Picture">
+                </div>
 
-               <div class="profile-info">
-                  <h3 class="quick-title">Quick Info
-                  <dl class="quick-list">
-                     <div class="quick-item">
-                        <dt>Experience</dt>
-                        <dd><strong>6 months</strong><span class="muted">Web / UI / Apps</span></dd>
-                     </div>
-                     <div class="quick-item">
-                        <dt>Featured</dt>
-                        <dd><strong>3 Projects</strong><span class="muted">Team & Solo</span></dd>
-                     </div>
-                  </dl>
-                  <div class="skills">
-                     <strong>Skills</strong>
-                     <p>HTML · CSS · JS · React · Figma · UX Design</p>
-                  </div>
-               </div>
+                <div class="profile-info">
+                    <h3 class="quick-title">Quick Info
+                        <dl class="quick-list">
+                            <div class="quick-item">
+                                <dt>Experience</dt>
+                                <dd><strong>6 months</strong><span class="muted">Web / UI / Apps</span></dd>
+                            </div>
+                            <div class="quick-item">
+                                <dt>Featured</dt>
+                                <dd><strong>3 Projects</strong><span class="muted">Team & Solo</span></dd>
+                            </div>
+                        </dl>
+                        <div class="skills">
+                            <strong>Skills</strong>
+                            <p>HTML · CSS · JS · React · Figma · UX Design</p>
+                        </div>
+                </div>
 
             </div>
 
             <div class="card card-center">
-               <div class="meta">
-                  <span class="name-small">Daryll Masapa</span>
-                  <span class="roles">Web Developer • Designer • Programmer</span>
-               </div>
+                <div class="meta">
+                    <span class="name-small">Daryll Masapa</span>
+                    <span class="roles">Web Developer • Designer • Programmer</span>
+                </div>
 
-               <h1 class="hero-title">The Project of<br/>Daryll Masapa</h1>
+                <h1 class="hero-title">The Project of<br/>Daryll Masapa</h1>
 
-               <div class="hero-blurb">
-                  <p>
-                     Throughout my college journey, I successfully completed a variety of projects that enhanced my skills in technology, design, and problem-solving. These include fully functional applications, interactive prototypes, and research-based outputs.
-                  </p>
-               </div>
+                <div class="hero-blurb">
+                    <p>
+                        Throughout my college journey, I successfully completed a variety of projects that enhanced my skills in technology, design, and problem-solving. These include fully functional applications, interactive prototypes, and research-based outputs.
+                    </p>
+                </div>
 
-               <div class="hero-ctas">
-                  <a href="#projects" class="btn btn-primary">See Featured Works</a>
-                  <a href="#contact" class="btn btn-outline">Contact Me</a>
-               </div>
+                <div class="hero-ctas">
+                    <a href="#projects" class="btn btn-primary">See Featured Works</a>
+                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                </div>
             </div>
 
-         </section>
+        </section>
 
-         <section id="about" class="about-card card">
+        <section id="about" class="about-card card">
             <h2 class="about-title">About me</h2>
             <h3 class="about-name">Hi, I'm Daryll Dave R. Masapa — also known as Mira</h3>
             <p class="about-role">BSIS - 2nd Year · Aspiring Web Developer, Data Analyst and Information Systems Student</p>
             <p class="about-desc">
-               6 months of experience in HTML, CSS, JavaScript, Java, Python, and C++.
-               Throughout my college journey, I successfully completed a variety of projects that enhanced my skills in technology, design, and problem-solving. These include fully functional applications, interactive prototypes, and research-based outputs.
+                6 months of experience in HTML, CSS, JavaScript, Java, Python, and C++. Throughout my college journey, I successfully completed a variety of projects that enhanced my skills in technology, design, and problem-solving. These include fully functional applications,
+                interactive prototypes, and research-based outputs.
             </p>
             <div class="hero-ctas about-ctas">
-               <a href="#projects" class="btn btn-primary">See Featured Works</a>
-               <a href="#contact" class="btn btn-outline">Contact Me</a>
+                <a href="#projects" class="btn btn-primary">See Featured Works</a>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
             </div>
-         </section>
+        </section>
 
-         <section id="achievements" class="section-block">
-           <h2>Certificate</h2>
+        <section id="achievements" class="section-block">
+            <h2>Certificate</h2>
 
-           <style>
-             /* Parent perspective (keeps 3D but no tilt) */
-             #achievements {
-               perspective: 1400px;
-               -webkit-perspective: 1400px;
-               padding-top: 10px; /* remove extra top padding */
-               margin-top: px; /* pull section slightly closer to About */
-             }
+            <style>
+                /* Parent perspective (keeps 3D but no tilt) */
+                #achievements {
+                    perspective: 1400px;
+                    -webkit-perspective: 1400px;
+                    padding-top: 10px;
+                    margin-top: px;
+                    
+                }
+                
+                
+                #achievements #drag-container,
+                #achievements #spin-container {
+                    position: relative;
+                    margin: auto;
+                    transform-style: preserve-3d;
+                    -webkit-transform-style: preserve-3d;
+                }
+                /* Landscape card size */
+                
+                #achievements #spin-container {
+                    width: 320px;
+                    height: 210px;
+                    transform-origin: center center;
+                }
+                /* Card appearance with glass reflection */
+                
+                #achievements #spin-container img {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    background: #fff;
+                    border-radius: 6px;
+                    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+                    /* allow seeing cards when the container tilts (back side visible) */
+                    backface-visibility: visible;
+                    -webkit-backface-visibility: visible;
+                    -webkit-transform-style: preserve-3d;
+                    transform-style: preserve-3d;
+                    -webkit-box-reflect: below 8px linear-gradient(transparent, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.45));
+                }
+                /* Ground */
+                
+                #achievements #ground {
+                    position: absolute;
+                    left: 50%;
+                    top: 100%;
+                    transform: translate(-50%, -50%) rotateX(90deg);
+                    width: 900px;
+                    height: 900px;
+                    background: radial-gradient(circle farthest-side, rgba(0, 0, 0, 0.40), transparent);
+                    pointer-events: none;
+                }
+            </style>
 
-             /* Allow JS to control transforms — DO NOT use !important to block inline styles */
-             #achievements #drag-container,
-             #achievements #spin-container {
-               position: relative;
-               margin: auto;
-               transform-style: preserve-3d;
-               -webkit-transform-style: preserve-3d;
-               /* no forced transform here (removed 'transform: none !important') */
-             }
+            <div id="drag-container" aria-label="Certificates carousel">
+                <div id="spin-container">
+                    <img src="Screenshot 2025-11-28 171926.png" alt="Certificate 1" />
+                    <img src="Screenshot 2025-11-28 171949.png" alt="Certificate 2" />
+                    <img src="Screenshot 2025-11-28 171900.png" alt="Certificate 3" />
+                    <img src="Screenshot 2025-11-28 172008.png" alt="Certificate 4" />
+                    <img src="Screenshot 2025-11-28 172042.png" alt="Certificate 5" />
+                    <img src="Screenshot 2025-11-28 172108.png" alt="Certificate 6" />
+                    <p style="display:none">Certificates</p>
+                </div>
+                <div id="ground"></div>
+            </div>
 
-             /* Landscape card size */
-             #achievements #spin-container {
-               width: 320px;
-               height: 210px;
-               transform-origin: center center;
-             }
+            <script>
+                (function() {
+                    var radius = 260;
+                    var autoRotate = true;
+                    var rotateSpeed = -60;
+                    var imgWidth = 320;
+                    var imgHeight = 210;
+                    var spacingPadding = 16;
 
-             /* Card appearance with glass reflection */
-             #achievements #spin-container img {
-               position: absolute;
-               left: 0;
-               top: 0;
-               width: 100%;
-               height: 100%;
-               object-fit: cover;
-               background: #fff;
-               border-radius: 6px;
-               box-shadow: 0 18px 40px rgba(0,0,0,0.6);
-               /* allow seeing cards when the container tilts (back side visible) */
-               backface-visibility: visible;
-               -webkit-backface-visibility: visible;
-               -webkit-transform-style: preserve-3d;
-               transform-style: preserve-3d;
-               -webkit-box-reflect: below 8px linear-gradient(transparent, rgba(255,255,255,0.03), rgba(0,0,0,0.45));
-             }
+                    var odrag = document.getElementById("drag-container");
+                    var ospin = document.getElementById("spin-container");
+                    var aImg = ospin.getElementsByTagName("img");
+                    var aVid = ospin.getElementsByTagName("video");
+                    var aEle = [].slice.call(aImg).concat([].slice.call(aVid));
 
-             /* Ground */
-             #achievements #ground {
-               position: absolute;
-               left: 50%;
-               top: 100%;
-               transform: translate(-50%, -50%) rotateX(90deg);
-               width: 900px;
-               height: 900px;
-               background: radial-gradient(circle farthest-side, rgba(0,0,0,0.40), transparent);
-               pointer-events: none;
-             }
-           </style>
+                    // sync container size with CSS
+                    ospin.style.width = imgWidth + "px";
+                    ospin.style.height = imgHeight + "px";
 
-           <div id="drag-container" aria-label="Certificates carousel">
-             <div id="spin-container">
-               <img src="Screenshot 2025-11-28 171926.png" alt="Certificate 1" />
-               <img src="Screenshot 2025-11-28 171949.png" alt="Certificate 2" />
-               <img src="Screenshot 2025-11-28 171900.png" alt="Certificate 3" />
-               <img src="Screenshot 2025-11-28 172008.png" alt="Certificate 4" />
-               <img src="Screenshot 2025-11-28 172042.png" alt="Certificate 5" />
-               <img src="Screenshot 2025-11-28 172108.png" alt="Certificate 6" />
-               <p style="display:none">Certificates</p>
-             </div>
-             <div id="ground"></div>
-           </div>
+                    var ground = document.getElementById("ground");
 
-           <script>
-             (function () {
-               var radius = 260;
-               var autoRotate = true;
-               var rotateSpeed = -60;
-               var imgWidth = 320;
-               var imgHeight = 210;
-               var spacingPadding = 16;
+                    function computeMinRadius() {
+                        var N = Math.max(1, aEle.length);
+                        var denom = 2 * Math.sin(Math.PI / N) || 1;
+                        var minR = (imgWidth + spacingPadding) / denom;
+                        if (!isFinite(minR) || minR < 0) minR = imgWidth;
+                        return Math.ceil(minR);
+                    }
 
-               var odrag = document.getElementById("drag-container");
-               var ospin = document.getElementById("spin-container");
-               var aImg = ospin.getElementsByTagName("img");
-               var aVid = ospin.getElementsByTagName("video");
-               var aEle = [].slice.call(aImg).concat([].slice.call(aVid));
+                    function ensureRadius(r) {
+                        return Math.max(r, computeMinRadius());
+                    }
 
-               // sync container size with CSS
-               ospin.style.width = imgWidth + "px";
-               ospin.style.height = imgHeight + "px";
+                    radius = ensureRadius(radius);
+                    if (ground) {
+                        ground.style.width = (radius * 2.6) + "px";
+                        ground.style.height = (radius * 2.6) + "px";
+                    }
 
-               var ground = document.getElementById("ground");
+                    function init(delayTime) {
+                        radius = ensureRadius(radius);
+                        for (var i = 0; i < aEle.length; i++) {
+                            var angle = i * (360 / aEle.length);
+                            aEle[i].style.transform = "rotateY(" + angle + "deg) translateZ(" + radius + "px)";
+                            aEle[i].style.transition = "transform 1s";
+                            aEle[i].style.transitionDelay = (delayTime || (aEle.length - i) / 4) + "s";
+                        }
+                        if (ground) {
+                            ground.style.width = (radius * 2.6) + "px";
+                            ground.style.height = (radius * 2.6) + "px";
+                        }
+                    }
 
-               function computeMinRadius() {
-                 var N = Math.max(1, aEle.length);
-                 var denom = 2 * Math.sin(Math.PI / N) || 1;
-                 var minR = (imgWidth + spacingPadding) / denom;
-                 if (!isFinite(minR) || minR < 0) minR = imgWidth;
-                 return Math.ceil(minR);
-               }
+                    // --- NO vertical tilt: only rotate Y on the container ---
+                    var tX = 0;
+                    var sX = 0,
+                        nX = 0,
+                        desX = 0;
 
-               function ensureRadius(r) {
-                 return Math.max(r, computeMinRadius());
-               }
+                    function applyTransformY() {
+                        // ensure container stays flat (no rotateX)
+                        odrag.style.transform = "rotateY(" + tX + "deg)";
+                    }
 
-               radius = ensureRadius(radius);
-               if (ground) {
-                 ground.style.width = (radius * 2.6) + "px";
-                 ground.style.height = (radius * 2.6) + "px";
-               }
+                    function playSpin(yes) {
+                        ospin.style.animationPlayState = yes ? "running" : "paused";
+                    }
 
-               function init(delayTime) {
-                 radius = ensureRadius(radius);
-                 for (var i = 0; i < aEle.length; i++) {
-                   var angle = i * (360 / aEle.length);
-                   aEle[i].style.transform = "rotateY(" + angle + "deg) translateZ(" + radius + "px)";
-                   aEle[i].style.transition = "transform 1s";
-                   aEle[i].style.transitionDelay = (delayTime || (aEle.length - i) / 4) + "s";
-                 }
-                 if (ground) {
-                   ground.style.width = (radius * 2.6) + "px";
-                   ground.style.height = (radius * 2.6) + "px";
-                 }
-               }
+                    if (autoRotate) {
+                        var animationName = rotateSpeed > 0 ? "spin" : "spinRevert";
+                        ospin.style.animation = animationName + " " + Math.abs(rotateSpeed) + "s infinite linear";
+                    }
 
-               // --- NO vertical tilt: only rotate Y on the container ---
-               var tX = 0;
-               var sX = 0, nX = 0, desX = 0;
+                    // Pointer: only horizontal movement updates rotation
+                    document.onpointerdown = function(e) {
+                        clearInterval(odrag.timer);
+                        e = e || window.event;
+                        sX = e.clientX;
 
-               function applyTransformY() {
-                 // ensure container stays flat (no rotateX)
-                 odrag.style.transform = "rotateY(" + tX + "deg)";
-               }
+                        this.onpointermove = function(ev) {
+                            ev = ev || window.event;
+                            nX = ev.clientX;
+                            desX = nX - sX;
+                            tX += desX * 0.12; // horizontal sensitivity
+                            applyTransformY();
+                            sX = nX;
+                        };
 
-               function playSpin(yes) {
-                 ospin.style.animationPlayState = yes ? "running" : "paused";
-               }
+                        this.onpointerup = function() {
+                            odrag.timer = setInterval(function() {
+                                desX *= 0.94;
+                                tX += desX * 0.12;
+                                applyTransformY();
+                                playSpin(false);
+                                if (Math.abs(desX) < 0.5) {
+                                    clearInterval(odrag.timer);
+                                    playSpin(true);
+                                }
+                            }, 17);
+                            this.onpointermove = this.onpointerup = null;
+                        };
 
-               if (autoRotate) {
-                 var animationName = rotateSpeed > 0 ? "spin" : "spinRevert";
-                 ospin.style.animation = animationName + " " + Math.abs(rotateSpeed) + "s infinite linear";
-               }
+                        return false;
+                    };
 
-               // Pointer: only horizontal movement updates rotation
-               document.onpointerdown = function (e) {
-                 clearInterval(odrag.timer);
-                 e = e || window.event;
-                 sX = e.clientX;
+                    // wheel zoom (keeps minimum spacing)
+                    document.onmousewheel = function(e) {
+                        e = e || window.event;
+                        var d = e.wheelDelta / 20 || -e.detail;
+                        radius = ensureRadius(Math.max(60, radius + d));
+                        init(1);
+                    };
 
-                 this.onpointermove = function (ev) {
-                   ev = ev || window.event;
-                   nX = ev.clientX;
-                   desX = nX - sX;
-                   tX += desX * 0.12; // horizontal sensitivity
-                   applyTransformY();
-                   sX = nX;
-                 };
+                    setTimeout(function() {
+                        init(0);
+                        applyTransformY();
+                    }, 120);
+                    window.addEventListener("resize", function() {
+                        radius = ensureRadius(radius);
+                        init(0);
+                    });
+                })();
+            </script>
 
-                 this.onpointerup = function () {
-                   odrag.timer = setInterval(function () {
-                     desX *= 0.94;
-                     tX += desX * 0.12;
-                     applyTransformY();
-                     playSpin(false);
-                     if (Math.abs(desX) < 0.5) {
-                       clearInterval(odrag.timer);
-                       playSpin(true);
-                     }
-                   }, 17);
-                   this.onpointermove = this.onpointerup = null;
-                 };
+            <!-- lightbox (unchanged) -->
+            <div id="cert-lightbox" class="lightbox" aria-hidden="true">
+                <div class="lightbox-backdrop"></div>
+                <div class="lightbox-content" role="dialog" aria-modal="true">
+                    <button class="lightbox-close" aria-label="Close certificate">✕</button>
+                    <img id="lightbox-img" src="" alt="Expanded certificate">
+                </div>
+            </div>
+        </section>
 
-                 return false;
-               };
-
-               // wheel zoom (keeps minimum spacing)
-               document.onmousewheel = function (e) {
-                 e = e || window.event;
-                 var d = e.wheelDelta / 20 || -e.detail;
-                 radius = ensureRadius(Math.max(60, radius + d));
-                 init(1);
-               };
-
-               setTimeout(function () { init(0); applyTransformY(); }, 120);
-               window.addEventListener("resize", function () { radius = ensureRadius(radius); init(0); });
-             })();
-           </script>
-
-           <!-- lightbox (unchanged) -->
-           <div id="cert-lightbox" class="lightbox" aria-hidden="true">
-             <div class="lightbox-backdrop"></div>
-             <div class="lightbox-content" role="dialog" aria-modal="true">
-               <button class="lightbox-close" aria-label="Close certificate">✕</button>
-               <img id="lightbox-img" src="" alt="Expanded certificate">
-             </div>
-           </div>
-         </section>
-
-         <section id="projects" class="section-block">
+        <section id="projects" class="section-block">
             <h2>Projects</h2>
 
             <div class="carousel-wrap">
-               <button class="carousel-btn prev-btn" aria-label="Previous projects">‹</button>
+                <button class="carousel-btn prev-btn" aria-label="Previous projects">‹</button>
 
-               <div class="carousel">
-                  <div class="carousel-viewport">
-                     <div class="carousel-track">
-                        <div class="project-card"><img class="expand-img" src="Screenshot 2025-11-28 184941.png" alt="Project 1"></div>
-                        <div class="project-card"><img class="expand-img" src="Screenshot 2025-11-28 184754.png" alt="Project 2"></div>
-                        <div class="project-card"><img class="expand-img" src="Screenshot 2025-06-03 205012.png" alt="Project 3"></div>
-                        <div class="project-card"><img class="expand-img" src="Screenshot 2025-06-03 203202.png" alt="Project 4"></div>
-                        <div class="project-card"><img class="expand-img" src="Screenshot 2025-11-28 185019.png" alt="Project 5"></div>
-                     </div>
-                  </div>
-               </div>
+                <div class="carousel">
+                    <div class="carousel-viewport">
+                        <div class="carousel-track">
+                            <div class="project-card"
+                                data-project-link="https://m1r4-cle.github.io/Green_Sense/"
+                                data-project-link-label="View GreenSense">
+                                <figure class="project-media">
+                                    <img src="Greensense.png" alt="GreenSense sustainability dashboard mockup">
+                                </figure>
+                                <div class="project-info">
+                                    <h3 class="project-title">GreenSense Dashboard</h3>
+                                    <p class="project-desc">Reserved slot for the upcoming sustainability monitoring tool currently in design.</p>
+                                    <ul class="project-tags">
+                                        <li>HTML</li>
+                                        <li>CSS</li>
+                                        <li>JavaScript</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <figure class="project-media">
+                                    <img src="SPR EMP Dashboard.png" alt="Smart Payroll employee dashboard interface">
+                                </figure>
+                                <div class="project-info">
+                                    <h3 class="project-title">Smart Payroll • Employee View</h3>
+                                    <p class="project-desc">Employee-side WinForms dashboard handling attendance, time logs, and profile management.</p>
+                                    <ul class="project-tags">
+                                        <li>C#</li>
+                                        <li>WinForms</li>
+                                        <li>SQL Server</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <figure class="project-media">
+                                    <img src="SPR Admin Dasboard.png" alt="Smart Payroll admin dashboard interface">
+                                </figure>
+                                <div class="project-info">
+                                    <h3 class="project-title">Smart Payroll • Admin View</h3>
+                                    <p class="project-desc">Administrative module providing overview metrics and controls for payroll operations.</p>
+                                    <ul class="project-tags">
+                                        <li>C#</li>
+                                        <li>Entity Framework</li>
+                                        <li>Admin UX</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <figure class="project-media">
+                                    <img src="SPR Login.png" alt="Smart Payroll login window">
+                                </figure>
+                                <div class="project-info">
+                                    <h3 class="project-title">Smart Payroll • Login</h3>
+                                    <p class="project-desc">Credential gate with layered validation and role-based routing into the payroll suite.</p>
+                                    <ul class="project-tags">
+                                        <li>Security</li>
+                                        <li>.NET</li>
+                                        <li>UX</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <figure class="project-media">
+                                    <img src="KITAKO MOBILE DASHBOARD.png" alt="Kitako mobile dashboard analytics screen">
+                                </figure>
+                                <div class="project-info">
+                                    <h3 class="project-title">Kitako Mobile Dashboard</h3>
+                                    <p class="project-desc">Mobile-first analytics overview designed to summarize cooperative KPIs at a glance.</p>
+                                    <ul class="project-tags">
+                                        <li>Java</li>
+                                        <li>Java GUI</li>
+                                        <li>Mobile UI</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <figure class="project-media">
+                                    <img src="KITAKO MOBILE DASBOARD 2.png" alt="Kitako mobile inventory management screen">
+                                </figure>
+                                <div class="project-info">
+                                    <h3 class="project-title">Kitako Inventory Screen</h3>
+                                    <p class="project-desc">Detailed stock management view supporting inline edits and quick inventory adjustments.</p>
+                                    <ul class="project-tags">
+                                        <li>Java</li>
+                                        <li>JAVA GUI</li>
+                                        <li>Mobile UI</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-               <button class="carousel-btn next-btn" aria-label="Next projects">›</button>
+                <button class="carousel-btn next-btn" aria-label="Next projects">›</button>
             </div>
-         </section>
-      </main>
+        </section>
+    </main>
 
-      <script src="portfolio_task4_script.js"></script>
-   </body>
+    <div id="project-lightbox" class="project-lightbox" aria-hidden="true">
+        <div class="project-lightbox__backdrop"></div>
+        <div class="project-lightbox__content" role="dialog" aria-modal="true">
+            <button class="project-lightbox__close" aria-label="Close project view">✕</button>
+            <div class="project-lightbox__media">
+                <img id="project-lightbox-img" src="" alt="Project preview">
+            </div>
+            <div class="project-lightbox__details">
+                <h2 id="project-lightbox-title"></h2>
+                <p id="project-lightbox-desc"></p>
+                <ul id="project-lightbox-tags" class="project-lightbox__tags"></ul>
+            </div>
+            <div id="project-lightbox-link-row" class="project-lightbox__link-row" hidden>
+                <span class="project-lightbox__link-label">Project link:</span>
+                <a id="project-lightbox-link"
+                   class="project-lightbox__link-anchor"
+                   href="#"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                   Open project
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="portfolio_task4_script.js"></script>
+    <script>
+        const projectLinkRow = document.getElementById('project-lightbox-link-row');
+        const projectLinkAnchor = document.getElementById('project-lightbox-link');
+
+        // ... inside the function that opens the lightbox
+        if (projectLinkRow && projectLinkAnchor && linkUrl) {
+            projectLinkAnchor.href = linkUrl;
+            projectLinkAnchor.textContent = linkLabel;
+            projectLinkRow.hidden = false;
+        } else if (projectLinkRow) {
+            projectLinkRow.hidden = true;
+        }
+    </script>
+</body>
 </html>
+
+<style>
+.project-card:focus,
+.project-card:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+</style>
