@@ -378,3 +378,72 @@ document.querySelectorAll('.project-card').forEach(card => {
   card.addEventListener('click', () => openProjectLightbox(card));
   card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProjectLightbox(card); } });
 });
+
+// Contact modal handlers — append to portfolio_task4_script.js
+(function(){
+  function closeContactModal(modal, unlockScroll=true) {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    if (unlockScroll) {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+  }
+  function openContactModal(modal) {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    const focusClose = modal.querySelector('.contact-modal__close');
+    if (focusClose) focusClose.focus();
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    const modal = document.getElementById('contact-modal');
+    if (!modal) return;
+
+    // open by hero/contact button
+    const openBtn = document.getElementById('open-contact');
+    if (openBtn) openBtn.addEventListener('click', ()=> openContactModal(modal));
+
+    // intercept nav / any anchor that targets #contact and open modal instead of scrolling
+    document.querySelectorAll('a[href="#contact"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        openContactModal(modal);
+      });
+    });
+
+    // close buttons/backdrop
+    modal.querySelectorAll('.contact-modal__close').forEach(btn => {
+      btn.addEventListener('click', ()=> closeContactModal(modal));
+    });
+    const backdrop = modal.querySelector('.contact-modal__backdrop');
+    if (backdrop) backdrop.addEventListener('click', ()=> closeContactModal(modal));
+
+    // close on Esc
+    window.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeContactModal(modal);
+      }
+    });
+
+    // simple form submission (demo) — prevent actual navigation
+    const form = modal.querySelector('.contact-form');
+    if (form) {
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        // you can replace with real submit logic (fetch)
+        form.querySelectorAll('input,textarea,button').forEach(el=>el.setAttribute('disabled',''));
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.textContent = 'Sent ✓';
+        setTimeout(()=> {
+          closeContactModal(modal);
+          form.reset();
+          if (submitBtn) submitBtn.textContent = 'Send';
+          form.querySelectorAll('input,textarea,button').forEach(el=>el.removeAttribute('disabled'));
+        }, 950);
+      });
+    }
+  }, { once:true });
+})();
