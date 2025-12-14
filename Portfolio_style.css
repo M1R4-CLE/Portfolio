@@ -555,7 +555,6 @@ section,
   from { -webkit-transform: rotateY(360deg); transform: rotateY(360deg); }
   to   { -webkit-transform: rotateY(0deg); transform: rotateY(0deg); }
 }
-
 #achievements #drag-container,
 #achievements #spin-container {
   height: auto;
@@ -746,6 +745,90 @@ section,
 .project-card:focus-visible {
   outline: none;
   box-shadow: none;
+}
+
+/* Contact section spacing + layout */
+.contact-section {
+  margin: 72px auto;
+  padding: 0 24px;
+  width: 100%;
+  max-width: 1200px;
+}
+.contact-card.contact-design {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(0,0,0,0.48), rgba(0,0,0,0.42));
+  padding: 56px;
+  border-radius: 14px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  position: relative;
+  overflow: visible;
+}
+
+/* left column */
+.contact-left { flex: 1 1 520px; max-width: 620px; color:var(--text); }
+.contact-title { margin:0 0 12px 0; font-size:2rem; color:var(--text); font-weight:800; }
+.contact-sub { margin:0 0 20px 0; color:var(--muted); font-size:1rem; }
+#open-contact.btn-primary { padding:14px 22px; font-size:1rem; border-radius:999px; }
+
+/* contact info list */
+.contact-info { display:flex; gap:24px; margin-top:28px; flex-wrap:wrap; }
+.contact-item { min-width:160px; }
+.contact-item strong { display:block; color:var(--accent); margin-bottom:8px; font-size:0.85rem; letter-spacing:0.03em; }
+.contact-item p { margin:0; color:var(--text); }
+
+/* social icons */
+.social-icons { display:flex; gap:14px; margin-top:8px; }
+
+.social-btn {
+  display:inline-grid;
+  place-items:center;
+  width:56px;
+  height:56px;
+  border-radius:12px;
+  text-decoration:none;
+  background: rgba(0,0,0,0.55);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.04);
+  transition: transform 160ms ease, background 160ms ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+.social-btn svg { width:20px; height:20px; color:var(--accent); display:block; }
+.social-btn:hover { transform:translateY(-4px); background: rgba(0,0,0,0.72); }
+
+/* right decorative art — large angled container using clip-path */
+.contact-right { flex: 0 0 520px; display:flex; align-items:center; justify-content:center; }
+.contact-art {
+  width:540px; height:420px;
+  background: linear-gradient(135deg, rgba(10,140,90,0.95), rgba(0,40,80,0.85));
+  box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+  clip-path: polygon(10% 0, 100% 0, 85% 100%, 20% 95%, 0 55%);
+  transform: translateX(20px) rotate(-6deg);
+  border-radius: 8px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* subtle inner glow to mimic the original design */
+.contact-art::before {
+  content: '';
+  position:absolute; inset:0;
+  background: radial-gradient(400px 140px at 30% 30%, rgba(255,255,255,0.06), transparent 20%),
+              linear-gradient(180deg, rgba(255,255,255,0.02), transparent 40%);
+  mix-blend-mode: overlay;
+}
+
+/* responsive */
+@media (max-width:1000px) {
+  .contact-card.contact-design { flex-direction: column; padding:36px; }
+  .contact-left { max-width:100%; }
+  .contact-right { width:100%; display:flex; justify-content:center; margin-top:18px; }
+  .contact-art { width:80%; height:300px; transform:none; clip-path: polygon(6% 0, 100% 0, 92% 100%, 22% 96%, 0 55%); }
+}
+@media (max-width:600px) {
+  .contact-art { height:220px; width:100%; }
+  .contact-info { flex-direction:column; gap:12px; }
 }
 
 
