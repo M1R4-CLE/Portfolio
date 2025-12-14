@@ -809,7 +809,7 @@ section,
   position:relative;
   overflow:hidden;
 }
-
+ 
 /* subtle inner glow to mimic the original design */
 .contact-art::before {
   content: '';
