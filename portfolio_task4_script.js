@@ -211,14 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initCarousel(wrap) {
-  console.log('initCarousel (scroll) for', wrap);
-  const viewport = wrap.querySelector('.carousel-viewport');
-  const track = wrap.querySelector('.carousel-track');
-  const prevBtn = wrap.querySelector('.prev-btn');
-  const nextBtn = wrap.querySelector('.next-btn');
-  if (!viewport || !track || !prevBtn || !nextBtn) {
-    console.warn('carousel missing elements', { viewport: !!viewport, track: !!track, prevBtn: !!prevBtn, nextBtn: !!nextBtn });
-    return;
+  
   }
 
   const items = Array.from(track.children);
@@ -269,7 +262,7 @@ function initCarousel(wrap) {
       if (!img.complete) img.addEventListener('load', ()=>{ /* noop */ });
     });
   }
-}
+
 
 console.log('script loaded?', !!window.initCarousel);
 console.log('carousels:', document.querySelectorAll('.carousel-wrap').length);
@@ -447,3 +440,50 @@ document.querySelectorAll('.project-card').forEach(card => {
     }
   }, { once:true });
 })();
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.carousel-wrap').forEach(wrap => {
+    const viewport = wrap.querySelector('.carousel-viewport');
+    const track = wrap.querySelector('.carousel-track');
+    const prevBtn = wrap.querySelector('.prev-btn');
+    const nextBtn = wrap.querySelector('.next-btn');
+    let cards = track.querySelectorAll('.project-card');
+    const cardGap = 32; // Adjust if your gap is different
+
+    // Get card width (including gap)
+    const cardWidth = cards[0].offsetWidth + cardGap;
+    const cardCount = cards.length;
+
+    // Clone first and last cards
+    const firstClone = cards[0].cloneNode(true);
+    const lastClone = cards[cardCount - 1].cloneNode(true);
+
+    // Add clones to the track
+    track.appendChild(firstClone);
+    track.insertBefore(lastClone, cards[0]);
+
+    // Set initial scroll position to the first real card
+    viewport.scrollLeft = cardWidth;
+
+    // Handle infinite scroll
+    viewport.addEventListener('scroll', function() {
+      if (viewport.scrollLeft <= 0) {
+        viewport.scrollLeft = cardWidth * cardCount;
+      } else if (viewport.scrollLeft >= cardWidth * (cardCount + 1)) {
+        viewport.scrollLeft = cardWidth;
+      }
+    });
+
+    // Button navigation
+    if (prevBtn && nextBtn) {
+      prevBtn.onclick = function(e) {
+        e.stopPropagation();
+        viewport.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+      };
+      nextBtn.onclick = function(e) {
+        e.stopPropagation();
+        viewport.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      };
+    }
+  });
+});
